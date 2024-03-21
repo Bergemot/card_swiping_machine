@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/layui/2.5.7/css/layui.css">
+  <style>
+    body {
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+    }
+    .layui-container {
+      max-width: 400px;
+      margin: 0 auto;
+      margin-top: 100px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .layui-form-item {
+      margin-bottom: 20px;
+    }
+    .layui-form-label {
+      width: 80px;
+    }
+    .layui-btn {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      background: linear-gradient(to right, #ff8a8a, #ff6262);
+      color: #fff;
+      transition: background-color 0.3s ease;
+    }
+    .layui-btn:hover {
+      background-color: #ff3434;
+    }
+    h2 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="layui-container">
+    <div class="layui-form">
+      <h2>Login</h2>
+      <div class="layui-form-item">
+        <label class="layui-form-label">Username</label>
+        <div class="layui-input-inline">
+          <input type="text" name="username" placeholder="Enter your username" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">Password</label>
+        <div class="layui-input-inline">
+          <input type="password" name="password" placeholder="Enter your password" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+          <button class="layui-btn" lay-submit lay-filter="login">Login</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/layui/2.5.7/layui.js"></script>
+  <script>
+  layui.use(['form', 'layer'], function() {
+    var form = layui.form;
+    var layer = layui.layer;
+
+    
+    // 监听登录表单提交
+    form.on('submit(login)', function(data) {
+      console.log('Form data:', data.field); // 添加这一行进行调试输出
+      // 发送登录请求
+      $.post('/login', data.field, function(result) {
+        // 登录成功，跳转到指定网页
+        if (result.code === 0) {
+          window.location.href = 'http://172.20.10.6:3000';
+        } else {
+          layer.msg(result.message);
+        }
+      });
+      return false;
+    });
+  });
+  </script>
+</body>
+</html>
